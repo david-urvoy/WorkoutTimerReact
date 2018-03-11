@@ -19,8 +19,7 @@ export default class Timer extends React.Component {
         if (this.state.countdown > 0) {
             this.setState((prevState, props) => ({ countdown: prevState.countdown - 1 }))
         } else {
-            clearInterval(this.state.timerID)
-            this.setState({ timerID: -1 })
+            this.props.stop()
         }
     }
 

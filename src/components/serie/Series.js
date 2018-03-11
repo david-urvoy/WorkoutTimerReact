@@ -11,16 +11,16 @@ export default class Series extends React.Component {
     }
 
     componentDidMount = () => {
-        this._series(0)
+        this._series(this.props.data)
     }
 
     componentWillReceiveProps = (props) => {
-        this._series(props.focus)
+        this._series(props.data)
     }
 
-    _series = (focus) => {
+    _series = ({index, length}) => {
         this.setState({
-            series: [...Array(focus).fill(P.value), D.value, ...Array(6 - focus).fill(P.value)]
+            series: [...Array(index-1).fill(P), D, ...Array(length - index).fill(P)]
         })
     }
 
@@ -29,7 +29,7 @@ export default class Series extends React.Component {
             <div className="series" >
                 {
                     this.state.series.map((serie, index) =>
-                        <Serie key={index} value={index} style={serie} click={() => this.props.click(index)} />)
+                        <Serie key={index} value={++index} style={serie} click={() => this.props.click(index)} />)
                 }
             </div>
         )

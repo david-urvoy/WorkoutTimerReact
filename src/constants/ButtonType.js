@@ -1,7 +1,3 @@
-export const P = {
-    value: "primary"
-}
-
-export const D = {
-    value: "danger"
-}
+export const P = "primary"
+export const D = "danger"
+export const S = "success"

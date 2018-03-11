@@ -17,5 +17,6 @@
   "description": "Web application that helps you manage your workout timings",
   "main": "index.js",
   "author": "David URVOY",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {}
 }
