@@ -10,8 +10,8 @@ const G = new Exercise("G", 6)
 const H = new Exercise("H", 6)
 const K2 = new Exercise("K2", 3)
 
-const UpperProgram = [B, A12, A2, C, K2]
-const LowerProgram = [E, F, G, H]
-const FullProgram = [B, A12, A2, C, E, F, G, H, K2]
+const UpperProgram = { name: 'Upper', workout: [B, A12, A2, C, K2] }
+const LowerProgram = { name: 'Lower', workout: [E, F, G, H] }
+const FullProgram = { name: 'FullBody', workout: [B, A12, A2, C, E, F, G, H, K2] }
 
 export { FullProgram, UpperProgram, LowerProgram }

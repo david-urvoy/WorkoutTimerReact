@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Programs from './components/Programs'
 import Series from './components/serie/Series'
 import RestPeriods from './components/rest-period/RestPeriods'
 import Timer from './components/Timer'
@@ -6,11 +7,13 @@ import Exercices from './components/exercise/Exercises'
 import { FullProgram, UpperProgram, LowerProgram } from './data/Program'
 import './App.css';
 
+const programs = [FullProgram, UpperProgram, LowerProgram]
+
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      program: FullProgram,
+      programIndex: 0,
       seriesData: {},
       exerciseIndex: 0,
       lockTimer: false,
@@ -21,7 +24,7 @@ class App extends Component {
   componentWillMount() {
     this.setState(prevState => {
       return ({
-        seriesData: { index: prevState.program[0].nbSeries, length: prevState.program[0].nbSeries }
+        seriesData: { index: programs[prevState.programIndex].workout[0].nbSeries, length: programs[prevState.programIndex].workout[0].nbSeries }
       })
     })
   }
@@ -30,15 +33,15 @@ class App extends Component {
     const serieIndex = prevState.seriesData.index - 1
     let exerciseIndex = prevState.exerciseIndex
     if (serieIndex === 0) {
-      if (prevState.program[exerciseIndex].double) {
-        prevState.program[exerciseIndex].double = false
+      if (programs[prevState.programIndex].workout[exerciseIndex].double) {
+        programs[prevState.programIndex].workout[exerciseIndex].double = false
       } else {
         exerciseIndex += 1
       }
     }
     return {
       seriesData: {
-        length: prevState.program[exerciseIndex].nbSeries, index: serieIndex === 0 ? prevState.program[exerciseIndex].nbSeries : serieIndex
+        length: programs[prevState.programIndex].workout[exerciseIndex].nbSeries, index: serieIndex === 0 ? programs[prevState.programIndex].workout[exerciseIndex].nbSeries : serieIndex
       },
       lockTimer: true,
       restPeriod: restPeriod,
@@ -65,7 +68,8 @@ class App extends Component {
             :
             <Timer countdown={this.state.restPeriod} stop={() => this.setState({ lockTimer: false })} />
         }
-        <Exercices program={this.state.program} index={this.state.exerciseIndex} click={this.focusExercise} />
+        <Exercices program={programs[this.state.programIndex]} index={this.state.exerciseIndex} click={this.focusExercise} />
+        <Programs programs={programs} index={this.state.programIndex} click={index => this.setState({ programIndex: index, exerciseIndex: 0 })} />
       </div>
     )
   }

@@ -6,7 +6,7 @@ export default function Exercises(props) {
     return (
         <div>
             {
-                props.program.map((exercise, index) =>
+                props.program.workout.map((exercise, index) =>
                     <Exercise key={index}
                         click={props.click}
                         style={index === props.index ? D : S}
