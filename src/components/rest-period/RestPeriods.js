@@ -5,14 +5,8 @@ export default class RestPeriods extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            restPeriods: []
-        }
-    }
-
-    componentDidMount = () => {
-        this.setState({
             restPeriods: [25, 60, 90, 120, 180, 240]
-        })
+        }
     }
 
     render() {
