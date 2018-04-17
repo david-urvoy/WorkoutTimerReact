@@ -11,11 +11,11 @@ export default class Timer extends React.Component {
     }
 
     componentDidMount = () => {
-        const timerID = setInterval(() => this._countdown(), 1000)
+        const timerID = setInterval(() => this.countdown(), 1000)
         this.setState({ timerID: timerID })
     }
 
-    _countdown = () => {
+    countdown = () => {
         if (this.state.countdown > 0) {
             this.setState((prevState, props) => ({ countdown: prevState.countdown - 1 }))
         } else {

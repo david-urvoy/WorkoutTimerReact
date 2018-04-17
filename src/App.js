@@ -13,10 +13,10 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      programIndex: 0,
-      seriesData: {},
       exerciseIndex: 0,
       lockTimer: false,
+      programIndex: 0,
+      seriesData: {},
       restPeriod: 0
     }
   }

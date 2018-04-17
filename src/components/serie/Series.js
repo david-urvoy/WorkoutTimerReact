@@ -11,14 +11,14 @@ export default class Series extends React.Component {
     }
 
     componentDidMount = () => {
-        this._series(this.props.data)
+        this.series(this.props.data)
     }
 
     componentWillReceiveProps = (props) => {
-        this._series(props.data)
+        this.series(props.data)
     }
 
-    _series = ({index, length}) => {
+    series = ({index, length}) => {
         this.setState({
             series: [...Array(index-1).fill(P), D, ...Array(length - index).fill(P)]
         })
