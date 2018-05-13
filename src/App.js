@@ -30,22 +30,24 @@ class App extends Component {
   }
 
   startTimer = restPeriod => this.setState(prevState => {
-    const serieIndex = prevState.seriesData.index - 1
-    let exerciseIndex = prevState.exerciseIndex
-    if (serieIndex === 0) {
-      if (programs[prevState.programIndex].workout[exerciseIndex].double) {
-        programs[prevState.programIndex].workout[exerciseIndex].double = false
-      } else {
-        exerciseIndex += 1
+    if (!prevState.lockTimer) {
+      const serieIndex = prevState.seriesData.index - 1
+      let exerciseIndex = prevState.exerciseIndex
+      if (serieIndex === 0) {
+        if (programs[prevState.programIndex].workout[exerciseIndex].double) {
+          programs[prevState.programIndex].workout[exerciseIndex].double = false
+        } else {
+          exerciseIndex += 1
+        }
       }
-    }
-    return {
-      seriesData: {
-        length: programs[prevState.programIndex].workout[exerciseIndex].nbSeries, index: serieIndex === 0 ? programs[prevState.programIndex].workout[exerciseIndex].nbSeries : serieIndex
-      },
-      lockTimer: true,
-      restPeriod: restPeriod,
-      exerciseIndex: exerciseIndex
+      return {
+        seriesData: {
+          length: programs[prevState.programIndex].workout[exerciseIndex].nbSeries, index: serieIndex === 0 ? programs[prevState.programIndex].workout[exerciseIndex].nbSeries : serieIndex
+        },
+        lockTimer: true,
+        restPeriod: restPeriod,
+        exerciseIndex: exerciseIndex
+      }
     }
   })
 
@@ -57,6 +59,12 @@ class App extends Component {
     seriesData: { index: exercise.nbSeries, length: exercise.nbSeries },
     exerciseIndex: exercise.index
   })
+
+  computeRest = () => {
+    const exercise = programs[this.state.programIndex].workout[this.state.exerciseIndex]
+    const rest = this.state.seriesData.index === 1 ? exercise.over : exercise.rest 
+    this.startTimer(rest)
+  }
 
   render() {
     return (
@@ -70,6 +78,7 @@ class App extends Component {
         }
         <Exercices program={programs[this.state.programIndex]} index={this.state.exerciseIndex} click={this.focusExercise} />
         <Programs programs={programs} index={this.state.programIndex} click={index => this.setState({ programIndex: index, exerciseIndex: 0 })} />
+        <button onClick={() => this.computeRest()}>START</button>
       </div>
     )
   }
