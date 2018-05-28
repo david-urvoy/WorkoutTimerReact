@@ -7,7 +7,10 @@
     ]
   },
   "rules": {
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "interface-name": [false, "always-prefix"],
+    "ordered-imports": false,
+    "member-access": [true, "no-public"]
   },
   "jsRules": {
     "object-literal-sort-keys": false,
