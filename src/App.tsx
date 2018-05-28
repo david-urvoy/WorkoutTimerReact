@@ -1,35 +1,47 @@
-import React, { Component } from 'react';
-import Programs from './components/Programs'
-import Series from './components/serie/Series'
-import RestPeriods from './components/rest-period/RestPeriods'
-import Timer from './components/Timer'
+import * as React from 'react';
+import Exercise from './model/Exercise'
 import Exercices from './components/exercise/Exercises'
+import Programs from './components/Programs'
+import RestPeriods from './components/rest-period/RestPeriods'
+import { Series, SeriesData } from './components/serie/Series'
+import Timer from './components/Timer'
 import { FullProgram, UpperProgram, LowerProgram } from './data/Program'
 import './App.css';
 
 const programs = [FullProgram, UpperProgram, LowerProgram]
 
-class App extends Component {
+interface AppState {
+  exerciseIndex: number
+  lockTimer: boolean,
+  programIndex: number,
+  seriesData: SeriesData,
+  restPeriod: number
+}
+
+class App extends React.Component<any, AppState> {
+  state: AppState
+
   constructor(props) {
     super(props)
     this.state = {
       exerciseIndex: 0,
       lockTimer: false,
       programIndex: 0,
-      seriesData: {},
+      seriesData: { index: 0, length: 0 },
       restPeriod: 0
     }
   }
 
   componentWillMount() {
-    this.setState(prevState => {
+    this.setState((prevState: AppState) => {
+      const nbSeries = programs[prevState.programIndex].workout[0].nbSeries
       return ({
-        seriesData: { index: programs[prevState.programIndex].workout[0].nbSeries, length: programs[prevState.programIndex].workout[0].nbSeries }
+        seriesData: { index: nbSeries, length: nbSeries }
       })
     })
   }
 
-  startTimer = restPeriod => this.setState(prevState => {
+  startTimer = (restPeriod: number) => this.setState((prevState: AppState) => {
     if (!prevState.lockTimer) {
       const serieIndex = prevState.seriesData.index - 1
       let exerciseIndex = prevState.exerciseIndex
@@ -40,29 +52,30 @@ class App extends Component {
           exerciseIndex += 1
         }
       }
+      const nbSeries = programs[prevState.programIndex].workout[exerciseIndex].nbSeries
       return {
         seriesData: {
-          length: programs[prevState.programIndex].workout[exerciseIndex].nbSeries, index: serieIndex === 0 ? programs[prevState.programIndex].workout[exerciseIndex].nbSeries : serieIndex
+          length: nbSeries, index: serieIndex === 0 ? nbSeries : serieIndex
         },
         lockTimer: true,
-        restPeriod: restPeriod,
-        exerciseIndex: exerciseIndex
+        restPeriod,
+        exerciseIndex
       }
     }
   })
 
-  focusSerie = index => this.setState(prevState => ({
-    seriesData: { ...prevState.seriesData, index: index }
+  focusSerie = (index: number) => this.setState((prevState: AppState) => ({
+    seriesData: { ...prevState.seriesData, index }
   }))
 
-  focusExercise = exercise => this.setState({
+  focusExercise = (exercise: Exercise, exerciseIndex: number) => this.setState({
     seriesData: { index: exercise.nbSeries, length: exercise.nbSeries },
-    exerciseIndex: exercise.index
+    exerciseIndex
   })
 
   computeRest = () => {
     const exercise = programs[this.state.programIndex].workout[this.state.exerciseIndex]
-    const rest = this.state.seriesData.index === 1 ? exercise.over : exercise.rest 
+    const rest = this.state.seriesData.index === 1 ? exercise.over : exercise.rest
     this.startTimer(rest)
   }
 

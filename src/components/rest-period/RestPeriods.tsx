@@ -1,7 +1,9 @@
-import React from 'react'
+import * as React from 'react'
 import RestPeriod from './RestPeriod'
 
 export default class RestPeriods extends React.Component {
+    state: { restPeriods: number[] }
+    props: { click: (restPeriod: number) => void }
     constructor(props) {
         super(props)
         this.state = {
@@ -12,7 +14,7 @@ export default class RestPeriods extends React.Component {
     render() {
         return (
             <div>
-                {this.state.restPeriods.map((restPeriod, index) => <RestPeriod key={index} restPeriod={restPeriod} click={() => this.props.click(restPeriod)} />)}
+                {this.state.restPeriods.map((restPeriod: number, index: number) => <RestPeriod key={index} restPeriod={restPeriod} click={() => this.props.click(restPeriod)} />)}
             </div>
         )
     }

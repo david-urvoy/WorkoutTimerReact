@@ -10,7 +10,8 @@
     "object-literal-sort-keys": false,
     "interface-name": [false, "always-prefix"],
     "ordered-imports": false,
-    "member-access": [true, "no-public"]
+    "member-access": [true, "no-public"],
+    "jsx-no-lambda": false
   },
   "jsRules": {
     "object-literal-sort-keys": false,

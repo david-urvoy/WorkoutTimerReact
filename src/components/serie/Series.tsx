@@ -1,8 +1,12 @@
-import React from 'react'
+import * as React from 'react'
 import Serie from './Serie'
 import { P, D } from '../../constants/ButtonType'
 
-export default class Series extends React.Component {
+export interface SeriesData { index: number, length: number }
+
+export class Series extends React.Component {
+    state: { series: number[] }
+    props: { data: SeriesData, click: (index: number) => void }
     constructor(props) {
         super(props)
         this.state = {
@@ -10,17 +14,17 @@ export default class Series extends React.Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         this.series(this.props.data)
     }
 
-    componentWillReceiveProps = (props) => {
+    componentWillReceiveProps(props) {
         this.series(props.data)
     }
 
-    series = ({index, length}) => {
+    series = ({ index, length }) => {
         this.setState({
-            series: [...Array(index-1).fill(P), D, ...Array(length - index).fill(P)]
+            series: [...Array(index - 1).fill(P), D, ...Array(length - index).fill(P)]
         })
     }
 

@@ -10,7 +10,8 @@ export default function Exercises(props) {
                     <Exercise key={index}
                         click={props.click}
                         style={index === props.index ? D : S}
-                        exercise={Object.assign(exercise, { index: index })} />
+                        index={index}
+                        exercise={exercise} />
                 )
             }
         </div>

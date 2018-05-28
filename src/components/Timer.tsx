@@ -1,7 +1,11 @@
-import React from 'react'
+import * as React from 'react'
 import format from '../constants/TimeFormat'
 
+interface TimerState { countdown: number, timerID: number }
+
 export default class Timer extends React.Component {
+    state: TimerState
+    props: { countdown: number, stop: () => void }
     constructor(props) {
         super(props)
         this.state = {
@@ -10,20 +14,20 @@ export default class Timer extends React.Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         const timerID = setInterval(() => this.countdown(), 1000)
-        this.setState({ timerID: timerID })
+        this.setState({ timerID })
     }
 
-    countdown = () => {
+    countdown() {
         if (this.state.countdown > 0) {
-            this.setState((prevState, props) => ({ countdown: prevState.countdown - 1 }))
+            this.setState((prevState: TimerState) => ({ countdown: prevState.countdown - 1 }))
         } else {
             this.props.stop()
         }
     }
 
-    componentWillUnmount = () => {
+    componentWillUnmount() {
         clearInterval(this.state.timerID)
     }
 
