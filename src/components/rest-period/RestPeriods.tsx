@@ -2,13 +2,10 @@ import * as React from 'react'
 import RestPeriod from './RestPeriod'
 
 export default class RestPeriods extends React.Component {
-    state: { restPeriods: number[] }
+    state: { restPeriods: [25, 60, 90, 120, 180, 240] }
     props: { click: (restPeriod: number) => void }
     constructor(props) {
         super(props)
-        this.state = {
-            restPeriods: [25, 60, 90, 120, 180, 240]
-        }
     }
 
     render() {
